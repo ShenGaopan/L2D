@@ -60,6 +60,8 @@ class SJSSP(gym.Env, EzPickle):
 
             # adj matrix
             precd, succd = self.getNghbs(action, self.opIDsOnMchs)
+            if flag and precd != action and succd != action:  # Remove the old arc when a new operation inserts between two operations.
+                self.adj[succd, precd] = 0
             self.adj[action] = 0
             self.adj[action, action] = 1
             if action not in self.first_col:
